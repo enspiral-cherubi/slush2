@@ -34,7 +34,9 @@ class Environment {
     this.gui = new dat.GUI()
     var options = this.gui.addFolder('options')
     this.rotate = true
+    this.gate = 100
     options.add(this, 'rotate').listen()
+    options.add(this, 'gate').min(0).max(250).step(1).listen()
     options.open()
 
     this._addCubeToScene()
@@ -42,7 +44,7 @@ class Environment {
     this.analyser = webAudioAnalyser2({
       context: audioCtx,
       fftSize: 2048,
-      equalTemperedFreqBinCount: 10
+      equalTemperedFreqBinCount: 3
     })
 
     // this causes output
@@ -62,11 +64,11 @@ class Environment {
 
   render () {
 
-    console.log(this.analyser.barkScaleFrequencyData())
-
     if(this.rotate){
-      this.cube.rotation.x+= 0.01
-      this.cube.rotation.y+=0.01
+      this.cube.rotation.x+= this.applyGate(this.analyser.barkScaleFrequencyData().frequencies[0])/1000
+      this.cube.rotation.y+=this.applyGate(this.analyser.barkScaleFrequencyData().frequencies[1])/1000
+      this.cube.rotation.z+=this.applyGate(this.analyser.barkScaleFrequencyData().frequencies[2])/1000
+
     }
 
 
@@ -75,6 +77,16 @@ class Environment {
   }
 
   // 'private'
+
+  applyGate(v) {
+    if (v < this.gate){
+      return 0
+    }
+    else {
+      return v
+    }
+
+  }
 
   _addCubeToScene() {
     var geometry = new THREE.BoxGeometry(1,1,1)
