@@ -64,10 +64,12 @@ class Environment {
 
   render () {
 
+    // console.log(this.analyser.equalTemperedFrequencyData(3))
+
     if(this.rotate){
-      this.cube.rotation.x+= this.applyGate(this.analyser.barkScaleFrequencyData().frequencies[0])/1000
-      this.cube.rotation.y+=this.applyGate(this.analyser.barkScaleFrequencyData().frequencies[1])/1000
-      this.cube.rotation.z+=this.applyGate(this.analyser.barkScaleFrequencyData().frequencies[2])/1000
+      this.cube.rotation.x+= this.applyGate(this.analyser.equalTemperedFrequencyData(3).frequencies[0])/1000
+      this.cube.rotation.y+=this.applyGate(this.analyser.equalTemperedFrequencyData(3).frequencies[1])/1000
+      this.cube.rotation.z+=this.applyGate(this.analyser.equalTemperedFrequencyData(3).frequencies[2])/1000
 
     }
 
