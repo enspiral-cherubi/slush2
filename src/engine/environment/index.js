@@ -4,6 +4,9 @@ const OrbitControls = require('three-orbit-controls')(THREE)
 const FlyControls = require('three-fly-controls')(THREE)
 const WindowResize = require('three-window-resize')
 const dat = require('dat.gui')
+const webAudioAnalyser2 = require('web-audio-analyser-2')
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)()
+const getMic = require('./getMic.js')(audioCtx)
 
 class Environment {
 
