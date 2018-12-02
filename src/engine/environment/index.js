@@ -38,6 +38,12 @@ class Environment {
     options.open()
 
     this._addCubeToScene()
+
+    this.analyser = webAudioAnalyser2({
+      context: audioCtx,
+      fftSize: 2048,
+      equalTemperedFreqBinCount: 10
+    })
   }
 
   render () {
@@ -45,6 +51,8 @@ class Environment {
       this.cube.rotation.x+=0.01
       this.cube.rotation.y+=0.01
     }
+
+    var barkScaleFrequencyData = this.analyser.barkScaleFrequencyData()
 
     this.renderer.render(this.scene, this.camera)
 
