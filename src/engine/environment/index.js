@@ -44,15 +44,30 @@ class Environment {
       fftSize: 2048,
       equalTemperedFreqBinCount: 10
     })
+
+    this.analyser.connect(audioCtx.destination)
+
+    var self = this
+
+    getMic(audioCtx)
+  .then(function (microphone) {
+    microphone.connect(self.analyser)
+  })
+  .fail(function (err) {
+    console.log('err: ', err)
+  })
+
   }
 
   render () {
+
+    console.log(this.analyser.barkScaleFrequencyData())
+
     if(this.rotate){
-      this.cube.rotation.x+=0.01
+      this.cube.rotation.x+= 0.01
       this.cube.rotation.y+=0.01
     }
 
-    var barkScaleFrequencyData = this.analyser.barkScaleFrequencyData()
 
     this.renderer.render(this.scene, this.camera)
 
