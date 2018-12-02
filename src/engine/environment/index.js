@@ -45,7 +45,8 @@ class Environment {
       equalTemperedFreqBinCount: 10
     })
 
-    this.analyser.connect(audioCtx.destination)
+    // this causes output
+    // this.analyser.connect(audioCtx.destination)
 
     var self = this
 
